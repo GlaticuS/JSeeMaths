@@ -40,6 +40,12 @@
       controllerAs: "gun",
       templateUrl: "app/templates/gun.html"
     })
+    .state('main', {
+      url: "/main/",
+      controller: "MAINController",
+      controllerAs: "main",
+      templateUrl: "app/templates/main.html"
+    })
 
     /*states.forEach(function(state) {
         $stateProvider.state(state);
