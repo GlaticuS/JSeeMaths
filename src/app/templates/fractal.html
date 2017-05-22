@@ -1,0 +1,12 @@
+    <div style="text-align: center;">
+        <div class="row">
+            <h3>Задайте 4 угла</h3>
+            <input type="number" ng-model="fractal.arr[0]" style="width:100px;">
+            <input type="number" ng-model="fractal.arr[1]" style="width:100px;">
+            <input type="number" ng-model="fractal.arr[2]" style="width:100px;">
+            <input type="number" ng-model="fractal.arr[3]" style="width:100px;">
+            <button class="btn btn-warning" ng-click="fractal.onFractalButtonClick();">Фракталим!</button>
+        </div>
+        <canvas id="canvas" style="display:none;"></canvas>
+        <img id="canvasImg">
+    </div>

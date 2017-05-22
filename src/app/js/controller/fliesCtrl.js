@@ -20,6 +20,10 @@ angular.module('JSeeMathsApp').controller('FLIESController', function ($scope, $
 
     render();
 
+    /**
+    * Функция обновления canvas, в которой вычисляются скорости "мух", углы, под которыми они будут лететь,
+    * что позволяет просчитать траекторию движения "мухи", перерисовывается каждый момент времени.
+    */
 	function render() {
 		context.clearRect(0, 0, width, height);
 		for(var i=0; i < vm.count; i++) {

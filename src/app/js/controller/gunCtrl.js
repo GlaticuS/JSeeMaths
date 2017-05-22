@@ -16,15 +16,19 @@ angular.module('JSeeMathsApp').controller('GUNController', function ($scope, $do
 	var	forceSpeed = 0.1;
 	var	rawForce = 0;
 	var	target = {};
+	var score = 0;
 
 	cannonball.radius = 7;
 
 	setTarget();
 	update ();
 
+    /**
+    * Устанавливает местоположение цели в случайном месте карты.
+    */
 	function setTarget() {
 		target.x = utils.randomRange(200, width);
-		target.y = height;
+		target.y = utils.randomRange(200, height);
 		target.radius = utils.randomRange(10, 40);
 	}
 
@@ -43,6 +47,10 @@ angular.module('JSeeMathsApp').controller('GUNController', function ($scope, $do
 		}
 	});
 
+
+    /**
+    * Функция выстрела, просчитывает скорость пули и её координаты.
+    */
 	function shoot() {
 		var force = utils.map(rawForce, -1, 1, 2, 20);
 		cannonball.x = gun.x + Math.cos(gun.angle) * 40;
@@ -53,6 +61,9 @@ angular.module('JSeeMathsApp').controller('GUNController', function ($scope, $do
 		isShooting = true;
 	}
 
+    /**
+    * Обновление canvas, что позволяет видеть движение на ней.
+    */
 	function update() {
 		if(!isShooting) {
 			forceAngle += forceSpeed;
@@ -70,9 +81,12 @@ angular.module('JSeeMathsApp').controller('GUNController', function ($scope, $do
 		requestAnimationFrame(update);
 	}
 
+    /**
+    * Обработка столкновения пули с целью - прибавка к счёту и новое местоположение цели.
+    */
 	function checkTarget() {
 		if(utils.circleCollision(target, cannonball)) {
-			// create amazing collision reaction!!!
+			score++;
 			setTarget();
 		}
 	}
@@ -93,18 +107,34 @@ angular.module('JSeeMathsApp').controller('GUNController', function ($scope, $do
 		aimGun(event.clientX, event.clientY);
 	}
 
+    /**
+    * Функция изменения угла дула пушки, при помощи зажатия мыши и ее движения.
+    * @param {number} mouseX, mouseY координаты мыши 
+    */
 	function aimGun(mouseX, mouseY) {
 		gun.angle = utils.clamp(Math.atan2(mouseY - gun.y, mouseX - gun.x), -Math.PI / 2, -0.3);
 	}
 
+    /**
+    * Отрисовка всех элементов игры, пушки, счетчика усиления, цели.
+    */
 	function draw() {
 		context.clearRect(0, 0, width, height);
 
-		context.fillStyle = "#ccc";
-		context.fillRect(10, height - 10, 20, -100);
+        context.fillStyle = "black"
+        context.font="20px Georgia";
+        context.fillText("Очки: " + score,10,50);
 
-		context.fillStyle = "#666";
-		context.fillRect(10, height - 10, 20, utils.map(rawForce, -1, 1, 0, -100));
+		context.fillStyle = "#ccc";
+		context.fillRect(10, height - 10, 20, -200);
+
+        var grd=context.createLinearGradient(10,height-10,20,400);
+        grd.addColorStop(0,"green");
+        grd.addColorStop(0.5, "yellow");
+        grd.addColorStop(1,"red");
+
+		context.fillStyle = grd;
+		context.fillRect(10, height - 10, 20, utils.map(rawForce, -1, 1, 0, -200));
 
 		context.fillStyle = "#000";
 
@@ -129,6 +159,6 @@ angular.module('JSeeMathsApp').controller('GUNController', function ($scope, $do
 		context.beginPath();
 		context.arc(target.x, target.y, target.radius, 0, Math.PI * 2, false);
 		context.fill();
-}
+    }
 
 })

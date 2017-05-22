@@ -9,20 +9,7 @@
 	$urlRouterProvider.otherwise("/");
     $httpProvider.defaults.xsrfCookieName = 'csrftoken';
     $httpProvider.defaults.xsrfHeaderName = 'X-CSRFToken';
-    /*var states = [
-      {
-        name: 'index',
-        url: '/index/',
-        controller: 'indexController',
-        templateUrl: 'app/templates/index.html'
-      },
-      {
-        name: 'flies',
-        url: '/flies/',
-        controller: 'fliesController',
-        templateUrl: 'app/templates/flies.html'
-      }
-    ];*/
+
     $stateProvider
     .state('index', {
       url: "/index/",
@@ -40,14 +27,17 @@
       controllerAs: "gun",
       templateUrl: "app/templates/gun.html"
     })
-    .state('main', {
-      url: "/main/",
-      controller: "MAINController",
-      controllerAs: "main",
-      templateUrl: "app/templates/main.html"
+    .state('fractal', {
+      url: "/fractal/",
+      controller: "FRACTALController",
+      controllerAs: "fractal",
+      templateUrl: "app/templates/fractal.html"
+    })
+    .state('fracAnimation', {
+      url: "/fracanimation/",
+      controller: "ANIMATIONController",
+      controllerAs: "animation",
+      templateUrl: "app/templates/fracAnimation.html"
     })
 
-    /*states.forEach(function(state) {
-        $stateProvider.state(state);
-    });*/
 }))
